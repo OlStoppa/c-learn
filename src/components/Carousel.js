@@ -161,7 +161,6 @@ class Carousel extends React.Component {
 		  )}
 		</ul>
 		
-
 		<ul className="carousel__slides">
 		  {this.props.slides.map((slide, index) =>
 			<CarouselSlide

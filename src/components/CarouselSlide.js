@@ -3,10 +3,6 @@ import YoutubeEmbedVideo from 'youtube-embed-video';
 
 const CarouselSlide = (props) => {
 
-		
-	
-  
-  
 	return (
 	  <li
 		className={
@@ -95,17 +91,11 @@ const CarouselSlide = (props) => {
 	  				})}
 	  				</div>);
 	  		})}
-
-
-	  			
-	  
 	  	</div>
-
 	  }
 
 	  {props.slide.input &&
 	  	<div>
-	  		
 	  			<textarea 
 	  			required 
 	  			placeholder="Answer here" 
@@ -113,8 +103,6 @@ const CarouselSlide = (props) => {
 	  			onChange={props.onChange} 
 	  			>
 	  			</textarea>
-	  			
-	  		
 	  	</div>
 			}
 			<div className= {props.isHidden === true ? "continue__button--wrap hidden" : "continue__button--wrap"}>
@@ -127,9 +115,7 @@ const CarouselSlide = (props) => {
 		className="button__continue" 
 		onClick={props.slideChange} 
 		>Continue</button>
-		
 	  </div>
-		
 	  </li>
 	);
   
