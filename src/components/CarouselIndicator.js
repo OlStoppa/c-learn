@@ -7,7 +7,7 @@ class CarouselIndicator extends React.Component {
 	  <li>
 		<a
 		  className={
-			this.props.index == this.props.activeIndex
+			this.props.index == this.props.activeIndex || this.props.index <= this.props.progress
 			  ? "carousel__indicator carousel__indicator--active"
 			  : "carousel__indicator"
 		  }

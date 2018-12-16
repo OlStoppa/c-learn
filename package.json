@@ -29,7 +29,8 @@
     "style-loader": "^0.23.1",
     "validator": "^10.8.0",
     "webpack": "^4.24.0",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.10",
+    "youtube-embed-video": "^1.1.0"
   },
   "devDependencies": {
     "webpack-cli": "^3.1.2"

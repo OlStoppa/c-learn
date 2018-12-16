@@ -1,44 +1,89 @@
 import React from 'react';
-import Header from './Header';
 import CarouselIndicator from './CarouselIndicator';
 import CarouselSlide from './CarouselSlide';
+import { withRouter } from "react-router-dom";
 
 
 class Carousel extends React.Component {
   constructor(props) {
-	super(props);
+		super(props);
 
-	this.goToSlide = this.goToSlide.bind(this);
-	this.goToPrevSlide = this.goToPrevSlide.bind(this);
-	this.goToNextSlide = this.goToNextSlide.bind(this);
+		this.goToSlide = this.goToSlide.bind(this);
+		this.goToPrevSlide = this.goToPrevSlide.bind(this);
+		this.goToNextSlide = this.goToNextSlide.bind(this);
+		this.incrementProgress = this.incrementProgress.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.onRadioChange = this.onRadioChange.bind(this);
+		
 
-	this.state = {
-	  activeIndex: 0
-	};
+		this.state = {
+			mode: props.location.state.mode,
+			activeIndex: 0,
+			progress: 0,
+			value: '',
+			type: '',
+			hidden: false,
+			radio: []
+		};
+	}
+	
+	onRadioChange(id,e) {
+		let radio = [...this.state.radio];
+		radio[id] = e.target.value;
+		this.setState({	
+				radio: [...radio],
+				hidden: false
+			 });
+			
+}
+		
+
+  handleChange(event){
+  	this.setState({
+			value: event.target.value,
+			type: event.target.name,
+			hidden: false	
+		});	
   }
 
   goToSlide(index) {
-	this.setState({
-	  activeIndex: index
-	});
-  }
+		const set = this.props.slides[index].noSubmit ? true : false;
+  	if(this.state.progress >= index) {
+			this.setState({
+				activeIndex: index,
+				hidden: set
+			});
+		}
+	}
+	handleClick(e) {
+	
+		const { type, value, activeIndex } = this.state;
+		if(type === "gap"){
+			if(value !== this.props.slides[activeIndex].solution){
+				alert("incorrect");
+				return 
+			}
+		}
+		this.incrementProgress(e);
+	} 
 
   goToPrevSlide(e) {
 	e.preventDefault();
 
-	let index = this.state.activeIndex;
-	let { slides } = this.props;
-	let slidesLength = slides.length;
+		let index = this.state.activeIndex;
+		let { slides } = this.props;
+		let slidesLength = slides.length;
 
-	if (index < 1) {
-	  index = slidesLength;
-	}
+		if (index < 1) {
+	  	index = slidesLength;
+		}
 
-	--index;
+		--index;
 
-	this.setState({
-	  activeIndex: index
-	});
+		this.setState({
+	  	activeIndex: index
+		});
   }
 
   goToNextSlide(e) {
@@ -48,17 +93,57 @@ class Carousel extends React.Component {
 	let { slides } = this.props;
 	let slidesLength = slides.length - 1;
 
-	if (index === slidesLength) {
-	  index = -1;
+	if(index == slidesLength){
+		this.props.history.push(`/${this.state.mode}`);
 	}
+	else{
 
 	++index;
+	const set = slides[index].noSubmit ? true : false;
+	if(slides[index].correct){
+		this.setState({value: slides[index].correct });
+	}
 
 	this.setState({
-	  activeIndex: index
-	});
+		activeIndex: index,
+		hidden: set
+		});
+	}
+  }
+  incrementProgress() {
+		let inc = 1;	
+		const { slides } = this.props;
+		const { progress, activeIndex } = this.state;
+		if(activeIndex == slides.length - 1){	
+			this.setState({hidden: true});
+		}
+		else{
+			this.setState((prevState) => {
+				return { 	
+					hidden: !prevState.hidden
+				};
+			});
+
+  	if (slides[activeIndex + 1].noSubmit === true){
+  		inc += 1;
+		}  
+		else if (slides[activeIndex + 1].noSubmit === true && slides[activeIndex + 2].noSubmit === true) {
+  	 	inc += 1;
+  	}
+
+  	if(progress - activeIndex < 1 && progress < slides.length) { 
+  		this.setState((prevState) => {
+  			return { 
+					progress: prevState.progress + inc,
+					hidden: true
+  			};
+  		});
+		}
+	}
   }
 
+
+ 
   render() {
 	return (
 		
@@ -71,6 +156,7 @@ class Carousel extends React.Component {
 			  index={index}
 			  activeIndex={this.state.activeIndex}
 			  onClick={e => this.goToSlide(index)}
+			  progress={this.state.progress}
 			/>
 		  )}
 		</ul>
@@ -81,17 +167,22 @@ class Carousel extends React.Component {
 			<CarouselSlide
 			  key={index}
 			  index={index}
-			  activeIndex={this.state.activeIndex}
+				activeIndex={this.state.activeIndex}
+				value={this.state.value}
 			  slide={slide}
+			  slideChange={this.goToNextSlide}
+			  progress={this.state.progress}
+				onChange={this.handleChange}
+				isHidden={this.state.hidden}
+				handleSubmit={this.handleClick}
+				onRadioChange={this.onRadioChange}
 			/>
 		  )}
 		</ul>
-		<div className='continue__button--wrap'>
-		<button className="button__continue" onClick={this.goToNextSlide}>Continue</button>
-		</div>
+		
 		</div> 
 	);
   }
 }
 
-export default Carousel;
+export default withRouter(Carousel);

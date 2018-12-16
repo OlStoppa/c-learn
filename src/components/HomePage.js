@@ -11,7 +11,7 @@ const HomePage = () => {
 				<div className="homePage">
 					<div>
 					<div className="mainOption">
-						<button className="optionButton">I</button><span>In Class</span>
+						<Link to="/inClass"className="optionButton"><span className="spanText">I</span></Link><span>In Class</span>
 					</div>
 					</div>
 					
