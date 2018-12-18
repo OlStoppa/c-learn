@@ -8,16 +8,20 @@
     height: 80vh;
     padding: 0 30px 0 30px;
     overflow-y: scroll;
+    
   
     @media (max-width: 700px) {
       padding-right: 0;
       padding-left: 0;
-      height: 100vh;
+      height: 90vh;
     }
   
     &--active {
       display: block;
+      opacity: 1;
+      
     }
+    
   }
 .slide__content{
     background: white;
@@ -25,10 +29,11 @@
     margin-bottom: 10px;
     @media(max-width: 450px){
       padding: 20px 0;
-      font-size: $l-size;
+      font-size: $m-size;
     }
    
 }
+
   
 .button__continue {
     height: 100px;
@@ -38,20 +43,27 @@
     border-radius: 100%;
     background: #64dd17;
     box-shadow: 0 5px 5px 0 grey;
-    opacity: 100%;
+    opacity: inherit;
     transition: opacity 1s;
+    &.submit{
+      background: #36abcb;
+    }
+    &:active{
+      opacity:0;
+    }
 } 
   
-.button__continue:disabled {
-    opacity: 0;
-} 
   
 .continue__button--wrap {
     width: 100%;
+    opacity: 100;
     display: flex;
     justify-content: flex-end;
+    
     &.hidden {
       display: none;
+      opacity:0;
+      transition: opacity 5s;
     }
     
 }

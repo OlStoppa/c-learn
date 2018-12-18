@@ -106,7 +106,7 @@ const CarouselSlide = (props) => {
 	  	</div>
 			}
 			<div className= {props.isHidden === true ? "continue__button--wrap hidden" : "continue__button--wrap"}>
-	    <input type="submit" className="button__continue"></input>
+	    <input type="submit" className="button__continue submit"></input>
 			</div>
 	    </form>
 	}
