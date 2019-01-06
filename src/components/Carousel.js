@@ -2,6 +2,7 @@ import React from 'react';
 import CarouselIndicator from './CarouselIndicator';
 import CarouselSlide from './CarouselSlide';
 import { withRouter } from "react-router-dom";
+import { database } from '../firebase/firebase';
 
 
 class Carousel extends React.Component {
@@ -64,6 +65,8 @@ class Carousel extends React.Component {
 				alert("incorrect");
 				return 
 			}
+		}else{
+			database.ref(this.state.activeIndex).set(this.state.value);
 		}
 		this.incrementProgress(e);
 	} 

@@ -54,7 +54,7 @@ const CarouselSlide = (props) => {
 	  {props.slide.correct &&
 	  	<div className="slide__content">
 	  		<h1>{props.slide.correct}</h1>
-	  		<textarea type="text" value={props.value} onChange={props.onChange}></textarea>
+	  		<textarea type="text" value={props.value} onChange={props.onChange} required></textarea>
 	  	</div>
 	  }
 
@@ -66,9 +66,7 @@ const CarouselSlide = (props) => {
 	  	{props.slide.radio.map((section, index) => {
 	  		return( <div>
 	  				<h2>
-	  					<span>{index + 1}. </span>{section.question.map((part, key) => {
-	  					return part;
-	  				})}
+	  					<span>{index + 1}. </span>{section.question}
 	  				</h2>
 	  				
 	  				{section.options.map((option,key) => {
